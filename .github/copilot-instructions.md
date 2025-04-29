@@ -1,3 +1,2 @@
 <!-- Use this file to provide workspace-specific custom instructions to Copilot. For more details, visit https://code.visualstudio.com/docs/copilot/copilot-customization#_use-a-githubcopilotinstructionsmd-file -->
 
-Projekt pobierze mapę z API NFZ dla Siedlec dla zabiegu kolonoskopii w trybie pilnym i wyświetli najbliższy termin kolonoskopii poprzez pinezki na mapie. Pacjent klikając w pinezkę, będzie widział pierwszą dostępną datę realizacji tej usługi.
