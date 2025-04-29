@@ -2,12 +2,15 @@ import requests
 import folium
 
 def fetch_treatment_data():
-    # Placeholder for NFZ API URL and parameters
-    api_url = "https://api.nfz.gov.pl/app-itl-api/"
+    # Updated NFZ API URL and parameters
+    api_url = "https://api.nfz.gov.pl/app-itl-api/queues"
     params = {
-        "city": "Siedlce",
-        "procedure": "kolonoskopia",
-        "mode": "pilny"
+        "page": 1,
+        "limit": 10,
+        "format": "json",
+        "case": 1,  # Urgent mode
+        "province": "07",  # Mazowieckie province
+        "locality": "Siedlce"  # City
     }
 
     try:
@@ -15,7 +18,7 @@ def fetch_treatment_data():
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
-        print(f"Nieuydane pobranie danych: {e}")
+        print(f"Nieudane pobranie danych: {e}")
         return None
 
 def process_data(data):
