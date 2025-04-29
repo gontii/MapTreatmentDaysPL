@@ -8,9 +8,10 @@ def fetch_treatment_data():
         "page": 1,
         "limit": 10,
         "format": "json",
-        "case": 1,  # Urgent mode
+        "case": 2,  # Urgent mode
         "province": "07",  # Mazowieckie province
-        "locality": "Siedlce"  # City
+        "benefit": "KOLONOSKOPIA",  # Treatment type
+        "locality": "SIEDLCE"  # City
     }
 
     try:
@@ -22,11 +23,19 @@ def fetch_treatment_data():
         return None
 
 def process_data(data):
-    # Extract relevant information (mocked for now)
-    locations = [
-        {"name": "Clinic A", "lat": 52.167, "lon": 22.290, "date": "2025-05-10"},
-        {"name": "Clinic B", "lat": 52.162, "lon": 22.280, "date": "2025-05-12"}
-    ]
+    # Extract relevant information from the API response
+    locations = []
+
+    for item in data.get("data", []):
+        location = {
+            "name": item.get("attributes", {}).get("provider", "Błąd pobrania nazwy"),
+            "lat": item.get("attributes", {}).get("latitude", {}),
+            "lon": item.get("attributes", {}).get("longitude", {}),
+            "date": item.get("attributes",{}).get("dates","Błąd pobrania klucza (dates)").get("date", "Błąd pobrania konkretnej daty (dates)")
+        }
+        if location["lat"] and location["lon"]:  # Ensure coordinates are available
+            locations.append(location)
+
     return locations
 
 def create_map(locations):
